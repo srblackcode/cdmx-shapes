@@ -1,0 +1,31 @@
+---
+title: "template"
+output:
+  html_document:
+    theme: null
+    highlight: null
+    css: styles.css
+params: 
+  title: NA
+  subtitle: NA
+  viz: NA
+  fuentes: NA
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## `r params$title` {.title-viz}
+
+## `r params$subtitle` {.subtitle-viz}
+
+```{r }
+params$viz()
+```
+
+## `r params$fuentes` {.fuentes-data}
+
+
+
