@@ -96,7 +96,7 @@ RUN R -e 'install.packages("remotes")' && \
     Rscript -e 'remotes::install_github("dreamRs/d3.format", dependencies=TRUE)' && \
     Rscript -e 'remotes::install_github("datasketch/homodatum", dependencies=TRUE)' && \
     Rscript -e 'remotes::install_version("DT")' && \
-    Rscript -e 'remotes::install_github("datasketch/dsmodules@5e9a9860ae27aad2cbecf3492be5e")' && \
+    Rscript -e 'remotes::install_github("datasketch/dsmodules")' && \
     Rscript -e 'remotes::install_github("srblackcode/cdmx-shapes")'
 
 # Configurar zona de construcción
