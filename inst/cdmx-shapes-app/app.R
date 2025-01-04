@@ -97,9 +97,8 @@ server <- function(input, output, session) {
   # read ckan info ----------------------------------------------------------
 
   info_url <- reactive({
-    print(url_info)
     linkInfo <- url_par()$inputs$ckanConf
-    if (is.null(linkInfo)) linkInfo <-"0d0a2598-4f0e-4bcd-a667-85be655a93a6"#"6e541083-1399-4c14-a210-0493167c7b16"#"0d0a2598-4f0e-4bcd-a667-85be655a93a6"#"7c6ea52c-8395-4ec9-82a9-96099a6fe6bc"#"eb20bbe2-cb43-4db2-8129-3feed446df68"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
+    if (is.null(linkInfo)) linkInfo <-  "eb20bbe2-cb43-4db2-8129-3feed446df68"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
     cdmx.shapes:::read_ckan_info(url = url_info, linkInfo = linkInfo)
   })
 
@@ -292,8 +291,7 @@ server <- function(input, output, session) {
 
   output$fuente <- renderUI({
     req(dic_ckan())
-    url <- gsub("/api/3/action/", "",url_info)
-    tags$a(href= paste0(url,"/organization/", dic_ckan()$listCaptions$id),
+    tags$a(href= paste0("https://datos.adyt.gob.mx/organization/", dic_ckan()$listCaptions$id),
            paste0("Fuente: ", dic_ckan()$listCaptions$label), target="_blank")
   })
 
@@ -345,13 +343,12 @@ server <- function(input, output, session) {
   params_markdown <- reactive({
     req(map_down())
     req(info_url())
-    url <- gsub("/api/3/action/", "",url_info)
     list(viz = reactive(map_down()),
          title = gsub("\\*", "\\\\*",info_url()$name),
          subtitle = info_url()$resource_subtitle,
          fuentes =   paste0("<span style='font-weight:700;'>Fuente: </span>", dic_ckan()$listCaptions$label, "<br/>",
-                            tags$a(href= paste0(url,"/dataset/", info_url()$package_id, "/resource/", info_url()$id),
-                                   paste0(url,"/dataset/", info_url()$package_id), target="_blank"
+                            tags$a(href= paste0("https://datos.adyt.gob.mx/dataset/", info_url()$package_id, "/resource/", info_url()$id),
+                                   paste0("https://datos.adyt.gob.mx/dataset/", info_url()$package_id), target="_blank"
                             )
          )
     )
@@ -387,11 +384,11 @@ server <- function(input, output, session) {
           <table id='table-punto-api'>
           <tr>
           <th>Consulta</th>
-          <td><a id='link-modal' href='",url_info,"datastore_search' target='blank'>",url_info,"datastore_search</a></td>
+          <td><a id='link-modal' href='https://datos.adyt.gob.mx/api/3/action/datastore_search' target='blank'>https://datos.adyt.gob.mx/api/3/action/datastore_search</a></td>
           </tr>
           <tr>
           <th>Consulta (via SQL)</th>
-          <td><a id='link-modal' href='",url_info,"datastore_search_sql' target='blank'>",url_info, "datastore_search_sql</a></td>
+          <td><a id='link-modal' href='https://datos.adyt.gob.mx/api/3/action/datastore_search_sql' target='blank'>https://datos.adyt.gob.mx/api/3/action/datastore_search_sql</a></td>
           </tr>
           </table>
           </div>"
@@ -402,22 +399,22 @@ server <- function(input, output, session) {
             div(style='padding:10px 0px;margin-top: 20px;font-weight: 500;',
                 "Ejemplo de consulta (primeros cinco resultados)"),
             HTML(paste0(
-              "<a id='link-modal' href='",url_info,"datastore_search?resource_id=",
-              link_api,"&limit=5' target='blank'>",url_info,"datastore_search?resource_id=",
+              "<a id='link-modal' href='https://datos.adyt.gob.mx/api/3/action/datastore_search?resource_id=",
+              link_api,"&limit=5' target='blank'>https://datos.adyt.gob.mx/api/3/action/datastore_search?resource_id=",
               link_api,"&limit=5</a>"
             )),
             div(style='padding:10px 0px;margin-top: 10px;font-weight: 500;',
                 "Ejemplo de consulta (resultados que contienen 'jones')"),
             HTML(paste0(
-              "<a id='link-modal' href='",url_info,"datastore_search?resource_id=",
-              link_api,"&q=jones' target='blank'>",url_info, "datastore_search?resource_id=",
+              "<a id='link-modal' href='https://datos.adyt.gob.mx/api/3/action/datastore_search?resource_id=",
+              link_api,"&q=jones' target='blank'>https://datos.adyt.gob.mx/api/3/action/datastore_search?resource_id=",
               link_api,"&q=jones'</a>"
             )),
             div(style='padding:10px 0px;margin-top: 10px;font-weight: 500;',
                 "Consulta ejemplo (vía SQL)"),
             HTML(paste0(
-              "<a id='link-modal' href='",url_info,"datastore_search_sql?sql=SELECT * from ",
-              link_api,"WHERE title LIKE 'jones'' target='blank'>",url_info,"datastore_search_sql?sql=SELECT * from ",
+              "<a id='link-modal' href='https://datos.adyt.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
+              link_api,"WHERE title LIKE 'jones'' target='blank'>https://datos.adyt.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
               link_api,"WHERE title LIKE 'jones'l</a>"
             ))
         ),
@@ -450,7 +447,7 @@ alert('Total results found: ' + data.result.total)
 <pre><code>
 import requests
 
-url = '",url_info,"'
+url = 'https://datos.adyt.gob.mx/api/3/action/'
 
 params = {
     'resource_id': '", link_api,"',
@@ -471,7 +468,7 @@ library(httr)
 library(jsonlite)
 library(tidyverse)
 
-url <- "',url_info,'"
+url <- "https://datos.adyt.gob.mx/api/3/action/"
 id <- "', link_api,'"
 
 consulta <- paste0(url, "datastore_search?", "resource_id=", id, "&limit=5", "&q=jones")
