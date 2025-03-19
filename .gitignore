@@ -13,3 +13,7 @@ inst/gobmx-shapes-app-high/rsconnect
 inst/gobmx-shapes-app-high/.Rbuildignore
 inst/gobmx-shapes-app-high/.DS_Store
 inst/gobmx-shapes-app-high/down_shapes
+
+
+site-library/
+*.zip
