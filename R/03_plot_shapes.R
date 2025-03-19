@@ -19,7 +19,7 @@ plot_shapes <- function(shape_data, opts) {
       urlTemplate = "https://maps.geoapify.com/v1/tile/positron/{z}/{x}/{y}.png?&apiKey=f39345000acd4188aae1f2f4eed3ff14",
       attribution = "positron"
     ),
-    topojson = mayorsCdmx,
+    topojson = mayorsGobmx,
     weight = 0.5,
     opacity = 0.8,
     fillColor = "transparent",
