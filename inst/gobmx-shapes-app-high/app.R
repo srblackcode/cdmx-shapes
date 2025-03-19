@@ -44,10 +44,10 @@ ui <- panelsPage(
           div(class = "title-div-filters", "AJUSTES ESTÉTICOS"),
           uiOutput("colors")
         ),
-        footer =  tags$a(
-          href="https://www.datasketch.co", target="blank",
-          img(src= 'img/ds_logo.svg',
-              align = "left", width = 130, height = 70))
+        # footer =  tags$a(
+        #   href="https://www.datasketch.co", target="blank",
+        #   img(src= 'img/ds_logo.svg',
+        #       align = "left", width = 130, height = 70))
   ),
   panel(title = " ",
         id = "naranja",
