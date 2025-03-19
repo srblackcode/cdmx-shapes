@@ -63,7 +63,7 @@ a#PdfReclasificacion,#PdfUpdate,#PdfOldUpdate {
   font-size: 13.1444px !important;
   line-height: 16px;
   letter-spacing: -0.0724778px;
-  color: #637083;
+  color: #000;
   margin-bottom: 7px !important;
 }
 
@@ -377,7 +377,7 @@ scroll STYLES
 }
 
 #vizToDownId,#dataToDownId {
-  background-color: #637083 !important;
+  background-color: #000 !important;
   border-radius: 3.28611px !important;
   color: #ffffff;
   display: inline-block;
@@ -407,11 +407,11 @@ p {
   cursor: pointer;
   padding: 4px 12px;
   font-weight: 300;
-  color: #637083 !important;
+  color: #000 !important;
 }
 
 .basic_active {
-  border-bottom: 2px solid #637083 !important;
+  border-bottom: 2px solid #000 !important;
   font-weight: 700 !important;
 }
 
@@ -423,7 +423,7 @@ p {
  cursor: pointer;
  padding: 4px 12px;
  font-weight: 300;
- color: #637083 !important;
+ color: #000 !important;
  display: block;
  width: 100% !important;
  text-align: left;

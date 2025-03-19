@@ -9,11 +9,14 @@ library(webshot2)
 
 ui <- panelsPage(
   includeCSS("www/custom.css"),
-  tags$head(tags$script(src="handlers.js")),
+  tags$head(
+    tags$link(rel = "icon", type = "image/x-icon", href = "favicon.ico"),
+    tags$script(src="handlers.js")
+  ),
   shinybusy::busy_start_up(
     loader = tags$img(
       src = "img/loading_gris.gif",
-      width = 100),
+      width = 250),
     mode = "auto",
     color = "#435b69",
     background = "#FFF"),
@@ -54,7 +57,7 @@ ui <- panelsPage(
         can_collapse = FALSE,
         header_right = div(style = "display: flex;align-items: center;",
                            # uiOutput("viz_icons"),
-                           p(class = "app-version","Versión Beta"),
+                          #  p(class = "app-version","Versión Beta"),
                            div(class = 'inter-container', style = "margin-right: 3%; margin-left: 3%;",
                                actionButton(inputId ='fs', "Fullscreen", onclick = "gopenFullscreen();")
                            ),
@@ -298,9 +301,9 @@ server <- function(input, output, session) {
   output$logos_add <- renderUI({
     req(dic_ckan())
     if (is.null(dic_ckan()$listLicense$url)) {
-      tx <- HTML(paste0("<span style='color:#3998A5;'>Licencia: </span>", dic_ckan()$listLicense$title))
+      tx <- HTML(paste0("<span style='color:#000;'>Licencia: </span>", dic_ckan()$listLicense$title))
     } else {
-      tx <- HTML(paste0("<span style='color:#3998A5;'>Licencia: </span>", tags$a(
+      tx <- HTML(paste0("<span style='color:#000;'>Licencia: </span>", tags$a(
         href= dic_ckan()$listLicense$url, target="blank", dic_ckan()$listLicense$title)))
     }
     tx
