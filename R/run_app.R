@@ -1,11 +1,11 @@
 #' @export
 run_app <- function(){
-    app_file <- system.file("cdmx-shapes-app/app.R", package = "cdmx.shapes")
+    app_file <- system.file("gobmx-shapes-app/app.R", package = "gobmx.shapes")
   shiny::runApp(app_file, port = 3838)
 }
 
 # #' @export
 # run_app_ciudadano <- function(){
-#     app_file <- system.file("cdmx-shapes-app-high/", package = "cdmx.shapes")
+#     app_file <- system.file("gobmx-shapes-app-high/", package = "gobmx.shapes")
 #     shiny::runApp(app_file, port = 3838)
 # }

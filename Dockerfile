@@ -110,4 +110,4 @@ RUN rm -rf /build_zone
 EXPOSE 3838
 
 # Comando final para ejecutar la aplicación
-CMD R -e "options('shiny.port'=3838, shiny.host='0.0.0.0'); cdmx.shapes:::run_app()"
+CMD R -e "options('shiny.port'=3838, shiny.host='0.0.0.0'); gobmx.shapes:::run_app()"

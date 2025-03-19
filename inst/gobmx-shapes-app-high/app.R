@@ -1,4 +1,4 @@
-library(cdmx.shapes)
+library(gobmx.shapes)
 library(dsmodules)
 library(leaflet)
 library(shiny)
@@ -99,13 +99,13 @@ server <- function(input, output, session) {
   info_url <- reactive({
     linkInfo <- url_par()$inputs$ckanConf
     if (is.null(linkInfo)) linkInfo <-  "62ec1cf7-937f-4d20-af1a-759451619c9a"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
-    cdmx.shapes:::read_ckan_info(url = url_info, linkInfo = linkInfo)
+    gobmx.shapes:::read_ckan_info(url = url_info, linkInfo = linkInfo)
   })
 
 
   dic_ckan <- reactive({
     req(info_url())
-    cdmx.shapes:::read_ckan_dic(url = url_info, info_url()$package_id)
+    gobmx.shapes:::read_ckan_dic(url = url_info, info_url()$package_id)
   })
 
   # read url from ckan ------------------------------------------------------
@@ -155,7 +155,7 @@ server <- function(input, output, session) {
 
   shape_fringe <- reactive({
     req(shape_load())
-    cdmx.shapes::fringe_data(shape_load()@data)
+    gobmx.shapes::fringe_data(shape_load()@data)
   })
 
   var_num <- reactive({
@@ -243,14 +243,14 @@ server <- function(input, output, session) {
 
   palette_colors <- reactive({
     req(shape_load())
-    pc <- cdmx.shapes:::colores_shape(class_shape = class(shape_load())[1])
+    pc <- gobmx.shapes:::colores_shape(class_shape = class(shape_load())[1])
     pc
   })
 
 
   output$colors <- renderUI({
     req(palette_colors())
-    colores <- cdmx.shapes:::colors_print(palette_colors())
+    colores <- gobmx.shapes:::colors_print(palette_colors())
     shinyinvoer::radioButtonsInput("colors_id", label = "Colores", colores)
   })
 
@@ -276,7 +276,7 @@ server <- function(input, output, session) {
 
         shape@data <- shape@data |>
           dplyr::mutate(labels = glue::glue(
-            cdmx.shapes:::labels_map(nms = label_id)) %>%
+            gobmx.shapes:::labels_map(nms = label_id)) %>%
               lapply(htmltools::HTML)
           )
       }
@@ -335,7 +335,7 @@ server <- function(input, output, session) {
   })
 
   output$menu_modal <- renderUI({
-    cdmx.shapes:::menu_buttons(ids = c("datos_dw", "viz_dw", "api_dw"),
+    gobmx.shapes:::menu_buttons(ids = c("datos_dw", "viz_dw", "api_dw"),
                                labels = c("Base de datos", "Gráfica", "API"))
   })
 
@@ -600,7 +600,7 @@ datos <- content$result$records
           if (input$vizDownFormat == "1") ext <- ".pdf"
           if (input$vizDownFormat == "2") ext <- ".html"
 
-          cdmx.shapes:::download_viz(params = params_markdown(),
+          gobmx.shapes:::download_viz(params = params_markdown(),
                                      file = file,
                                      ext = ext,
                                      template_file = "markdown/template.Rmd")
