@@ -87,8 +87,9 @@ server <- function(input, output, session) {
 
   # global info -------------------------------------------------------------
 
-  readRenviron(".Renviron")
-  url_info <- Sys.getenv("ckanUrl")
+  #readRenviron(".Renviron")
+  #url_info <- Sys.getenv("ckanUrl")
+  url_info <- "https://devdatos.atdt.gob.mx/api/3/action/"
 
   par <- list(ckanConf = "2a94b47f-c826-4789-a2df-013d91a4a44d")
 
@@ -338,8 +339,11 @@ server <- function(input, output, session) {
   })
 
   output$menu_modal <- renderUI({
-    gobmx.shapes:::menu_buttons(ids = c("datos_dw", "viz_dw", "api_dw"),
-                               labels = c("Base de datos", "Gráfica", "API"))
+    # NOTE: Uncomment the following line to add a button to download the data
+    # gobmx.shapes:::menu_buttons(ids = c("datos_dw", "viz_dw", "api_dw"),
+    #                            labels = c("Base de datos", "Gráfica", "API"))
+    gobmx.shapes:::menu_buttons(ids = c("datos_dw", "api_dw"),
+                               labels = c("Base de datos", "API"))
   })
 
 

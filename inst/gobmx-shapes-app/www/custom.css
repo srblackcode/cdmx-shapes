@@ -449,7 +449,7 @@ a#description_modal_ui_1-PdfReclasificacion,
 
 #download_viz_ui_1-menu_modal {
     display: grid;
-    grid-template-columns: .3fr .3fr .3fr !important
+    grid-template-columns: .3fr .2fr !important
 }
 
 .tab-data-down,
