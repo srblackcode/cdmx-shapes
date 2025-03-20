@@ -91,7 +91,7 @@ server <- function(input, output, session) {
   #url_info <- Sys.getenv("ckanUrl")
   url_info <- "https://devdatos.atdt.gob.mx/api/3/action/"
 
-  par <- list(ckanConf = "2a94b47f-c826-4789-a2df-013d91a4a44d")
+  par <- list(ckanConf = "4d6f570f-f2fc-45e5-af32-08f42a46265b")
 
   url_par <- reactive({
     shinyinvoer::url_params(par, session)

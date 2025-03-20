@@ -69,7 +69,7 @@ a#description_modal_ui_1-PdfReclasificacion,
     font-size: 13.1444px !important;
     line-height: 16px;
     letter-spacing: -0.0724778px;
-    color: #000;
+    color: #637083;
     margin-bottom: 7px !important
 }
 
@@ -454,7 +454,7 @@ a#description_modal_ui_1-PdfReclasificacion,
 
 .tab-data-down,
 .tab-data-down {
-    padding: 15px 35px
+    padding: 0px;
 }
 
 #tab-modal-down {
@@ -475,7 +475,7 @@ a#description_modal_ui_1-PdfReclasificacion,
 
 #download_viz_ui_1-vizToDownId,
 #download_viz_ui_1-dataToDownId {
-    background-color: #000 !important;
+    background-color: #637083 !important;
     border-radius: 3.28611px !important;
     color: #fff;
     display: inline-block;
@@ -506,11 +506,11 @@ p {
     cursor: pointer;
     padding: 4px 12px;
     font-weight: 300;
-    color: #000 !important
+    color: #637083 !important
 }
 
 .basic_active {
-    border-bottom: 2px solid #000 !important;
+    border-bottom: 2px solid #637083 !important;
     font-weight: 700 !important
 }
 
@@ -521,7 +521,7 @@ p {
     cursor: pointer;
     padding: 4px 12px;
     font-weight: 300;
-    color: #000 !important;
+    color: #637083 !important;
     display: block;
     width: 100% !important;
     text-align: left;
@@ -834,4 +834,8 @@ table.dataTable.display tbody tr:hover {
 
 .dataTables_wrapper {
     background: #fff !important;
+}
+
+.tab-body-modal {
+    padding: 40px 10px 10px 10px;
 }
