@@ -1,4 +1,12 @@
+# Usar la imagen base de R con la versión 4.2
 FROM --platform=linux/amd64 rocker/r-ver:4.2
+
+# Definir variables de entorno
+ENV TZ=Etc/UTC \
+    R_HOME=/usr/local/lib/R \
+    R_VERSION=4.2.1 \
+    LANG=en_US.UTF-8 \
+    CRAN=https://packagemanager.rstudio.com/cran/__linux__/focal/latest
 
 # Actualizar y preparar las dependencias iniciales
 RUN apt-get update && apt-get install -y \
@@ -23,7 +31,7 @@ RUN wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | 
     apt-get install -y /tmp/apache-arrow.deb && \
     rm /tmp/apache-arrow.deb && rm -rf /var/lib/apt/lists/*
 
-# Instalar otras dependencias
+# Instalar otras dependencias necesarias para R y Shiny
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     lsb-release \
@@ -41,6 +49,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libproj-dev \
     libssl-dev \
     libxml2-dev \
+    bzip2 \
     make \
     pandoc \
     pandoc-citeproc \
@@ -57,25 +66,38 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libtiff5-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:rael-gc/rvm && \
+    apt-get update && \
+    apt-get install -y libssl1.1
+
+# CORRECCIÓN: Instalar Google Chrome en lugar de Chromium
+RUN wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && apt-get install -y google-chrome-stable
+
+# CORRECCIÓN: Establecer Google Chrome como navegador predeterminado
+ENV CHROMOTE_CHROME="/usr/bin/google-chrome"
+
 RUN cd /tmp && \
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
     tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
     mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
     rm -rf phantomjs-2.1.1-linux-x86_64.tar.bz2 phantomjs-2.1.1-linux-x86_64
 
-
-# Copiar librerias de R
+# Copiar librerías de R previamente instaladas
 COPY site-library /usr/local/lib/R/site-library
 
-# Copiar archivos del proyecto
+# Definir directorio de trabajo
 WORKDIR /build_zone
 COPY . /build_zone
 
-# Eliminar archivos para evitar activar el entornovirtual
+# Eliminar archivos de renv para evitar problemas con el entorno virtual
 RUN rm -rf /build_zone/renv /build_zone/renv.lock
 
 # Exponer el puerto de Shiny
-EXPOSE 3838
+EXPOSE 3839
 
 # Comando final para ejecutar la aplicación
-CMD R -e "options('shiny.port'=3838, shiny.host='0.0.0.0'); shiny::runApp(system.file('gobmx-shapes-app', package = 'gobmx.shapes'))"
+CMD R -e "options('shiny.port'=3839, shiny.host='0.0.0.0'); shiny::runApp(system.file('gobmx-shapes-app', package = 'gobmx.shapes'))"
