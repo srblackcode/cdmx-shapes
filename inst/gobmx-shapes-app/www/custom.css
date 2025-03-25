@@ -129,10 +129,22 @@ a#description_modal_ui_1-PdfReclasificacion,
 
 .btn-default {
     background: #fff !important;
-    background: #fff !important;
     border: 2px solid #611232;
     border-radius: 10px !important;
     color: #611232;
+    float: left;
+    font-size: .82rem;
+    font-weight: 400;
+    text-transform: initial;
+    letter-spacing: 0;
+    margin-bottom: 3px
+}
+
+.btn-descargas {
+    background: #611232 !important;
+    border: 2px solid #611232;
+    border-radius: 10px !important;
+    color: #fff;
     float: left;
     font-size: .82rem;
     font-weight: 400;
@@ -371,7 +383,7 @@ a#description_modal_ui_1-PdfReclasificacion,
 
 .dataSummary {
     display: flex;
-    color: #000;
+    color: #637381;
     margin: 2px 70px 2px 50px
 }
 

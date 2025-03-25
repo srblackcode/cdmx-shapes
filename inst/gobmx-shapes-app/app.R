@@ -62,7 +62,7 @@ ui <- panelsPage(
                                actionButton(inputId ='fs', "Fullscreen", onclick = "gopenFullscreen();")
                            ),
                            div(class='second-container',
-                               actionButton("descargas", "Descargas", icon = icon("download"), width = "150px")
+                               actionButton("descargas", "Descargas", icon = icon("download"), width = "150px", class = "btn-descargas")
                            )
         ),
         body =  div(
@@ -152,8 +152,6 @@ server <- function(input, output, session) {
     )
     shape
   })
-
-
 
   # read data from shape ----------------------------------------------------
 
