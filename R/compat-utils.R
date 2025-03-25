@@ -89,7 +89,7 @@ colors_print <- function(palette_colors) {
     colors <- cd[[palette]]
     as.character( div(
       purrr::map(colors, function(color) {
-        div(style=paste0("width: 20px; height: 20px; display: inline-block; background-color:", color, ";"))
+        div(style=paste0("width: 24px; height: 12px; display: inline-block; background-color:", color, ";"))
       })
     ))
   })

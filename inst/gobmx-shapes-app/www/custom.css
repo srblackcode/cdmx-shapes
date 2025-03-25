@@ -839,3 +839,14 @@ table.dataTable.display tbody tr:hover {
 .tab-body-modal {
     padding: 40px 10px 10px 10px;
 }
+
+input[type="checkbox"] {
+    accent-color: #611232;
+}
+
+#lbl_colors_id {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 8px 0px 5px 0px;
+}
