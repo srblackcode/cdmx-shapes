@@ -862,3 +862,14 @@ input[type="checkbox"] {
     font-size: 12px;
     margin: 8px 0px 5px 0px;
 }
+
+.layout-panels {
+    background-color: #fbfdfe;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-x: auto;
+    padding-top: 1rem !important;
+    padding-right: 0rem  !important;
+    padding-bottom: 1rem  !important;
+    padding-left: 1rem  !important;
+}
