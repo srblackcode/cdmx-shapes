@@ -58,23 +58,23 @@ colores_shape <- function(class_shape) {
 
   if (class_shape %in% c("SpatialLinesDataFrame", "SpatialPointsDataFrame")) {
     cd <-   list(
-      palette_a = c("#1B5C51"),
-      palette_b = c("#B48E5D"),
-      palette_c = c("#0E709E"),
-      palette_d = c("#253786"),
-      palette_e = c("#9E2348"),
-      palette_f = c("#B33718")
+      palette_a = c("#262699"),
+      palette_b = c("#0559D3"),
+      palette_c = c("#095F68"),
+      palette_d = c("#05875E"),
+      palette_e = c("#F9AE06"),
+      palette_f = c("#EA1B1B")
     )
   }
 
   if (class_shape == "SpatialPolygonsDataFrame") {
     cd <- list(
-      palette_a = c("#1B5C51", "#4E786F", "#66887F", "#7E9992", "#96ACA5", "#AFBFBB", "#C8D4D1", "#E2EBE9"),
-      palette_b = c("#B48E5D", "#C3A57D", "#CBB18E", "#D3BDA0", "#DCCAB2", "#E4D6C5", "#EDE3D7", "#F6F1EB"),
-      palette_c = c("#0E709E", "#568BB2", "#709ABC", "#88A9C7", "#9FBAD2", "#B5CADD", "#CBDBE8", "#E0EDF3"),
-      palette_d = c("#253786", "#52599C", "#696DA9", "#8182B6", "#999AC4", "#B1B1D2", "#CACADE", "#E1E2EB"),
-      palette_e = c("#9E2348", "#B15267", "#BB6979", "#C6818D", "#D19AA3", "#DCB3B9", "#E8CCD1", "#F4E5E9"),
-      palette_f = c("#B33718", "#C45633", "#CC6644", "#D47657", "#DD876B", "#E69880", "#EFAA96", "#F8BBAD")
+      palette_a = c("#262699", "#3D3DE2", "#5454FC", "#6D6DFC", "#8D8DFC", "#A9A9FC"),
+      palette_b = c("#0559D3", "#166EFA", "#438BFF", "#69A2FF", "#8AB7FF", "#B0CEFF"),
+      palette_c = c("#095F68", "#0A7F94", "#18A6AD", "#3FC4C4", "#6BD1CF", "#9BDDDA"),
+      palette_d = c("#05875E", "#16B584", "#3EC695", "#6AD3AD", "#9BE0C4", "#D1F2E1"),
+      palette_e = c("#F9AE06", "#FFCE00", "#FFE966", "#FFEB99", "#FFF5CC", "#FEF7E6"),
+      palette_f = c("#EA1B1B", "#FA4D56", "#FF6666", "#FFC0CC", "#FFD9E2", "#FFEBF1")
     )
   }
 
