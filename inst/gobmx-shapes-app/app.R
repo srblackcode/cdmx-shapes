@@ -44,7 +44,7 @@ ui <- panelsPage(
           uiOutput("layers"),
           uiOutput("numeric_ui"),
           uiOutput("label_opts"),
-          div(class = "title-div-filters", "AJUSTES ESTÉTICOS"),
+          # div(class = "title-div-filters", "AJUSTES ESTÉTICOS"),
           uiOutput("colors")
         ),
         # footer =  tags$a(
@@ -62,7 +62,7 @@ ui <- panelsPage(
                                actionButton(inputId ='fs', "Fullscreen", onclick = "gopenFullscreen();")
                            ),
                            div(class='second-container',
-                               actionButton("descargas", "Descargas", icon = icon("download"), width = "150px")
+                               actionButton("descargas", "Descargas", icon = icon("download"), width = "150px", class = "btn-descargas")
                            )
         ),
         body =  div(
@@ -153,8 +153,6 @@ server <- function(input, output, session) {
     shape
   })
 
-
-
   # read data from shape ----------------------------------------------------
 
   shape_fringe <- reactive({
@@ -197,8 +195,6 @@ server <- function(input, output, session) {
       dic <- dic |> dplyr::filter(Nombre %in% var_num)
       var_num <- setNames(dic$Nombre, dic$Etiqueta)
     }
-
-
     var_num
   })
 
@@ -255,7 +251,11 @@ server <- function(input, output, session) {
   output$colors <- renderUI({
     req(palette_colors())
     colores <- gobmx.shapes:::colors_print(palette_colors())
-    shinyinvoer::radioButtonsInput("colors_id", label = "Colores", colores)
+    shinyinvoer::radioButtonsInput(
+      "colors_id",
+      label = tags$label("Color", id = "lbl_colors_id"),
+      colores
+    )
   })
 
 

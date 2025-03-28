@@ -41,7 +41,7 @@ ui <- panelsPage(
           uiOutput("layers"),
           uiOutput("numeric_ui"),
           uiOutput("label_opts"),
-          div(class = "title-div-filters", "AJUSTES ESTÉTICOS"),
+          # div(class = "title-div-filters", "AJUSTES ESTÉTICOS"),
           uiOutput("colors")
         ),
         # footer =  tags$a(
@@ -251,7 +251,7 @@ server <- function(input, output, session) {
   output$colors <- renderUI({
     req(palette_colors())
     colores <- gobmx.shapes:::colors_print(palette_colors())
-    shinyinvoer::radioButtonsInput("colors_id", label = "Colores", colores)
+    shinyinvoer::radioButtonsInput("colors_id", label = "Color", colores)
   })
 
 

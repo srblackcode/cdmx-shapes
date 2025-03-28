@@ -20,10 +20,10 @@ plot_shapes <- function(shape_data, opts) {
       attribution = "positron"
     ),
     topojson = mayorsGobmx,
-    weight = 0.5,
-    opacity = 0.8,
+    weight = 0,
+    opacity = 0,
     fillColor = "transparent",
-    color = "#000000"
+    color = "transparent"
   )
 
   if (shape_class == "SpatialLinesDataFrame") {
@@ -53,17 +53,17 @@ plot_shapes <- function(shape_data, opts) {
     stroke <- FALSE
 
     if (is.null(opts$data)) {
-      stroke <- TRUE
+      #stroke <- TRUE
       fill_opacity <- 0.3
       fill_color <- opts$colors[1]
-      color <- fill_color
+      color <- "transparent"
     } else {
       pal <- leaflet::colorNumeric(
         rev(opts$colors),
         domain = as.numeric(shape_data[[opts$var_num]])
       )
       fill_color <- pal(as.numeric(shape_data@data[[opts$var_num]]))
-      color <- opts$colors[1]
+      color <- "transparent"
     }
 
     lf <- leaflet::addLegend(
@@ -71,9 +71,9 @@ plot_shapes <- function(shape_data, opts) {
         lf,
         data = shape_data,
         label = ~labels,
-        stroke = TRUE,
-        weight = 0.3,
-        opacity = 1,
+        stroke = FALSE,
+        weight = 0,
+        opacity = 0,
         fillOpacity = fill_opacity,
         smoothFactor = 0,
         color = color,
