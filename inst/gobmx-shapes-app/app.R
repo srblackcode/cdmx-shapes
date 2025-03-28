@@ -67,7 +67,7 @@ ui <- panelsPage(
         ),
         body =  div(
           # verbatimTextOutput("debug"),
-          leafletOutput("map_shape", height = 620),
+          leafletOutput("map_shape", height = 730),
           div(style="display: flex;justify-content: space-between;",
               uiOutput("fuente"),
               uiOutput("logos_add")
