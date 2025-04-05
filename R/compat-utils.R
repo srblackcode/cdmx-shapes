@@ -59,9 +59,9 @@ colores_shape <- function(class_shape) {
   if (class_shape %in% c("SpatialLinesDataFrame", "SpatialPointsDataFrame")) {
     cd <-   list(
       palette_c = c("#095F68"),
+      palette_d = c("#05875E"),
       palette_a = c("#262699"),
       palette_b = c("#0559D3"),
-      palette_d = c("#05875E"),
       palette_e = c("#F9AE06"),
       palette_f = c("#EA1B1B")
     )
@@ -70,9 +70,9 @@ colores_shape <- function(class_shape) {
   if (class_shape == "SpatialPolygonsDataFrame") {
     cd <- list(
       palette_c = c("#095F68", "#0A7F94", "#18A6AD", "#3FC4C4", "#6BD1CF", "#9BDDDA"),
+      palette_d = c("#05875E", "#16B584", "#3EC695", "#6AD3AD", "#9BE0C4", "#D1F2E1"),
       palette_a = c("#262699", "#3D3DE2", "#5454FC", "#6D6DFC", "#8D8DFC", "#A9A9FC"),
       palette_b = c("#0559D3", "#166EFA", "#438BFF", "#69A2FF", "#8AB7FF", "#B0CEFF"),
-      palette_d = c("#05875E", "#16B584", "#3EC695", "#6AD3AD", "#9BE0C4", "#D1F2E1"),
       palette_e = c("#F9AE06", "#FFCE00", "#FFE966", "#FFEB99", "#FFF5CC", "#FEF7E6"),
       palette_f = c("#EA1B1B", "#FA4D56", "#FF6666", "#FFC0CC", "#FFD9E2", "#FFEBF1")
     )
