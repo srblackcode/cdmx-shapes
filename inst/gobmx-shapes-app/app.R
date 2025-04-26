@@ -11,15 +11,40 @@ ui <- panelsPage(
   includeCSS("www/custom.css"),
   tags$head(
     tags$link(rel = "icon", type = "image/x-icon", href = "favicon.ico"),
-    tags$script(src="handlers.js")
+    tags$script(src="handlers.js"),
+    tags$style(HTML(
+      ".panel-header {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
+          padding: 0 !important;
+          font-family: 'Noto Sans';
+          color: #000;
+        }
+
+        .panel-header .header-row-top {
+          font-size: 20px;
+          font-weight: bold;
+          text-align: center;
+          padding: 0px;
+        }
+
+        .panel-header .header-row-bottom {
+          font-size: 14px;
+          text-align: center;
+          margin: 0.5rem;
+        }"
+    ))
   ),
   shinybusy::busy_start_up(
     loader = tags$img(
       src = "img/loading_gris.gif",
-      width = 250),
+      width = 250
+    ),
     mode = "auto",
     color = "#435b69",
-    background = "#FFF"),
+    background = "#FFF"
+  ),
   shinypanels::modal(id = 'modal_download',
                      title = " ",
                      fullscreen = TRUE,
@@ -52,32 +77,55 @@ ui <- panelsPage(
         #   img(src= 'img/ds_logo.svg',
         #       align = "left", width = 130, height = 70))
   ),
-  panel(title = " ",
-        id = "naranja",
-        can_collapse = FALSE,
-        header_right = div(style = "display: flex;align-items: center;",
-                           # uiOutput("viz_icons"),
-                          #  p(class = "app-version","Versión Beta"),
-                           div(class = 'inter-container', style = "margin-right: 3%; margin-left: 3%;",
-                               actionButton(inputId ='fs', "Fullscreen", onclick = "gopenFullscreen();")
-                           ),
-                           div(class='second-container',
-                               actionButton("descargas", "Descargas", icon = icon("download"), width = "150px", class = "btn-descargas")
-                           )
-        ),
-        body =  div(
-          # verbatimTextOutput("debug"),
-          leafletOutput("map_shape", height = 730),
-          div(style="display: flex;justify-content: space-between;",
-              uiOutput("fuente"),
-              uiOutput("logos_add")
-          )
-        ),
-        footer =
-          div(style = "display:flex;align-items: center;background: #F7F7F7;justify-content: space-between;",
-              uiOutput("summaryInfo"),
-              uiOutput("infoButt")
-          )
+  panel(
+    title = div(
+      div(
+        class = "header-row-top",
+        textOutput("nombre_dataset"),
+      ),
+      div(
+        class = "header-row-bottom",
+        textOutput("subtitulo_dataset"),
+      )
+    ),
+    id = "naranja",
+    can_collapse = FALSE,
+    header_right = div(
+      style = "display: flex; align-items: center; justify-content: flex-end; width: 100%; padding: 0rem;",
+      div(
+        class = "inter-container",
+        style = "margin-right: 3%; margin-left: 3%;",
+        actionButton(
+          inputId = "fs",
+          label = "Fullscreen",
+          onclick = "gopenFullscreen();"
+        )
+      ),
+      div(
+        class = "second-container",
+        actionButton(
+          "descargas",
+          "Descargas",
+          icon = icon("download"),
+          width = "150px",
+          class = "btn-descargas"
+        )
+      ),
+    ),
+    body =  div(
+      # verbatimTextOutput("debug"),
+      leafletOutput("map_shape", height = 710),
+      div(
+          style = "display: flex;justify-content: space-between;",
+          uiOutput("fuente"),
+          uiOutput("logos_add")
+      )
+    ),
+    footer = div(
+      style = "display:flex;align-items: center;background: #F7F7F7;justify-content: space-between;",
+      uiOutput("summaryInfo"),
+      uiOutput("infoButt")
+    )
   )
 )
 
@@ -87,9 +135,20 @@ server <- function(input, output, session) {
 
   # global info -------------------------------------------------------------
 
-  #readRenviron(".Renviron")
-  #url_info <- Sys.getenv("ckanUrl")
-  url_info <- "https://devdatos.atdt.gob.mx/api/3/action/"
+  renviron_paths <- c(
+    file.path("/build_zone/.Renviron"), # Ubicación 2: Producción
+    file.path("~/.Renviron")            # Ubicación 1: Desarrollo
+  )
+
+  for (path in renviron_paths) {
+    if (file.exists(path)) {
+      message("Cargando .Renviron desde: ", path)
+      readRenviron(path)
+      break
+    }
+  }
+
+  url_info <- Sys.getenv("ckanUrl")
 
   par <- list(ckanConf = "4d6f570f-f2fc-45e5-af32-08f42a46265b")
 
@@ -102,7 +161,7 @@ server <- function(input, output, session) {
 
   info_url <- reactive({
     linkInfo <- url_par()$inputs$ckanConf
-    if (is.null(linkInfo)) linkInfo <-  "eb20bbe2-cb43-4db2-8129-3feed446df68"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
+    if (is.null(linkInfo)) linkInfo <-  "eb20bbe2-cb43-4db2-8129-3feed446df68"
     gobmx.shapes:::read_ckan_info(url = url_info, linkInfo = linkInfo)
   })
 
@@ -290,8 +349,13 @@ server <- function(input, output, session) {
     shape
   })
 
+  output$nombre_dataset <- renderText({
+    info_url()$name
+  })
 
-
+  output$subtitulo_dataset <- renderText({
+    dic_ckan()$listCaptions$label
+  })
 
   output$fuente <- renderUI({
     req(dic_ckan())
