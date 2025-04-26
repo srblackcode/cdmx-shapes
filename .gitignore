@@ -2,7 +2,7 @@
 .DS_Store
 .Rbuildignore
 .RData
-.Renviron
+# .Renviron
 .Rhistory
 .Rprofile
 inst/gobmx-shapes-app/rsconnect
