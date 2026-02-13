@@ -359,7 +359,7 @@ server <- function(input, output, session) {
 
   output$fuente <- renderUI({
     req(dic_ckan())
-    tags$a(href= paste0("https://devdatos.atdt.gob.mx/organization/", dic_ckan()$listCaptions$id),
+    tags$a(href= paste0("https://www.datos.gob.mx/organization/", dic_ckan()$listCaptions$id),
            paste0("Fuente: ", dic_ckan()$listCaptions$label), target="_blank")
   })
 
@@ -418,8 +418,8 @@ server <- function(input, output, session) {
          title = gsub("\\*", "\\\\*",info_url()$name),
          subtitle = info_url()$resource_subtitle,
          fuentes =   paste0("<span style='font-weight:700;'>Fuente: </span>", dic_ckan()$listCaptions$label, "<br/>",
-                            tags$a(href= paste0("https://devdatos.atdt.gob.mx/dataset/", info_url()$package_id, "/resource/", info_url()$id),
-                                   paste0("https://devdatos.atdt.gob.mx/dataset/", info_url()$package_id), target="_blank"
+                            tags$a(href= paste0("https://www.datos.gob.mx/dataset/", info_url()$package_id, "/resource/", info_url()$id),
+                                   paste0("https://www.datos.gob.mx/dataset/", info_url()$package_id), target="_blank"
                             )
          )
     )
@@ -455,11 +455,11 @@ server <- function(input, output, session) {
           <table id='table-punto-api'>
           <tr>
           <th>Consulta</th>
-          <td><a id='link-modal' href='https://devdatos.atdt.gob.mx/api/3/action/datastore_search' target='blank'>https://devdatos.atdt.gob.mx/api/3/action/datastore_search</a></td>
+          <td><a id='link-modal' href='https://www.datos.gob.mx/api/3/action/datastore_search' target='blank'>https://www.datos.gob.mx/api/3/action/datastore_search</a></td>
           </tr>
           <tr>
           <th>Consulta (via SQL)</th>
-          <td><a id='link-modal' href='https://devdatos.atdt.gob.mx/api/3/action/datastore_search_sql' target='blank'>https://devdatos.atdt.gob.mx/api/3/action/datastore_search_sql</a></td>
+          <td><a id='link-modal' href='https://www.datos.gob.mx/api/3/action/datastore_search_sql' target='blank'>https://www.datos.gob.mx/api/3/action/datastore_search_sql</a></td>
           </tr>
           </table>
           </div>"
@@ -470,22 +470,22 @@ server <- function(input, output, session) {
             div(style='padding:10px 0px;margin-top: 20px;font-weight: 500;',
                 "Ejemplo de consulta (primeros cinco resultados)"),
             HTML(paste0(
-              "<a id='link-modal' href='https://devdatos.atdt.gob.mx/api/3/action/datastore_search?resource_id=",
-              link_api,"&limit=5' target='blank'>https://devdatos.atdt.gob.mx/api/3/action/datastore_search?resource_id=",
+              "<a id='link-modal' href='https://www.datos.gob.mx/api/3/action/datastore_search?resource_id=",
+              link_api,"&limit=5' target='blank'>https://www.datos.gob.mx/api/3/action/datastore_search?resource_id=",
               link_api,"&limit=5</a>"
             )),
             div(style='padding:10px 0px;margin-top: 10px;font-weight: 500;',
                 "Ejemplo de consulta (resultados que contienen 'jones')"),
             HTML(paste0(
-              "<a id='link-modal' href='https://devdatos.atdt.gob.mx/api/3/action/datastore_search?resource_id=",
-              link_api,"&q=jones' target='blank'>https://devdatos.atdt.gob.mx/api/3/action/datastore_search?resource_id=",
+              "<a id='link-modal' href='https://www.datos.gob.mx/api/3/action/datastore_search?resource_id=",
+              link_api,"&q=jones' target='blank'>https://www.datos.gob.mx/api/3/action/datastore_search?resource_id=",
               link_api,"&q=jones'</a>"
             )),
             div(style='padding:10px 0px;margin-top: 10px;font-weight: 500;',
                 "Consulta ejemplo (vía SQL)"),
             HTML(paste0(
-              "<a id='link-modal' href='https://devdatos.atdt.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
-              link_api,"WHERE title LIKE 'jones'' target='blank'>https://devdatos.atdt.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
+              "<a id='link-modal' href='https://www.datos.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
+              link_api,"WHERE title LIKE 'jones'' target='blank'>https://www.datos.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from ",
               link_api,"WHERE title LIKE 'jones'l</a>"
             ))
         ),
@@ -501,7 +501,7 @@ limit: 5, // get 5 results
 q: 'jones' // query for 'jones'
 };
 $.ajax({
-url: 'https://devdatos.atdt.gob.mx/api/3/action/datastore_search',
+url: 'https://www.datos.gob.mx/api/3/action/datastore_search',
 data: data,
 dataType: 'jsonp',
 success: function(data) {
@@ -518,7 +518,7 @@ alert('Total results found: ' + data.result.total)
 <pre><code>
 import requests
 
-url = 'https://devdatos.atdt.gob.mx/api/3/action/'
+url = 'https://www.datos.gob.mx/api/3/action/'
 
 params = {
     'resource_id': '", link_api,"',
@@ -539,7 +539,7 @@ library(httr)
 library(jsonlite)
 library(tidyverse)
 
-url <- "https://devdatos.atdt.gob.mx/api/3/action/"
+url <- "https://www.datos.gob.mx/api/3/action/"
 id <- "', link_api,'"
 
 consulta <- paste0(url, "datastore_search?", "resource_id=", id, "&limit=5", "&q=jones")
@@ -692,14 +692,16 @@ datos <- content$result$records
       pctgView <- 100
       nDig <- 2
       if (pctgView == 100) nDig <- 0
-      HTML(paste0(
-        "<div class = 'dataSummary'>",
-        "<div class = 'infoAll'>",format(nrowIni, big.mark = ","), "<span class = 'infoAdd'>Total</span></div>",
-        "<div class = 'infoAll footer-center-line'>",format( nrowIni, big.mark = ","), "<span class = 'infoAdd'>Visualizados</span></div>",
-        "<div class = 'infoAll footer-center-line'>",format(pctgView, big.mark = ",", digits = 2, nsmall = nDig), "%<span class = 'infoAdd'> del total</span></div>",
-        # "<div class = 'infoAll' style = 'border-left: 1px solid;margin-left:3%;padding: 0% 3%;'>",format(sum(Nmv$Total, na.rm = TRUE), big.mark = ","), "<span class = 'infoAdd'>No identificados</span></div>
-        "</div>"
-      ))
+      HTML(
+        # paste0(
+        #   "<div class = 'dataSummary'>",
+        #   "<div class = 'infoAll'>",format(nrowIni, big.mark = ","), "<span class = 'infoAdd'>Total</span></div>",
+        #   "<div class = 'infoAll footer-center-line'>",format( nrowIni, big.mark = ","), "<span class = 'infoAdd'>Visualizados</span></div>",
+        #   "<div class = 'infoAll footer-center-line'>",format(pctgView, big.mark = ",", digits = 2, nsmall = nDig), "%<span class = 'infoAdd'> del total</span></div>",
+        #   # "<div class = 'infoAll' style = 'border-left: 1px solid;margin-left:3%;padding: 0% 3%;'>",format(sum(Nmv$Total, na.rm = TRUE), big.mark = ","), "<span class = 'infoAdd'>No identificados</span></div>
+        #   "</div>"
+        # )
+      )
     },
     error = function(cond) {
       return()
