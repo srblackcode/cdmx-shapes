@@ -5,20 +5,53 @@ plot_shapes <- function(shape_data, opts) {
 
   shape_class <- class(shape_data)[1]
 
+  base_map <- leaflet::leaflet(
+    option = leaflet::leafletOptions(
+      zoomSnap = 0.25,
+      zoomDelta = 0.25,
+      zoomControl = TRUE,
+      minZoom = 5,
+      maxZoom = 15
+    )
+  )
+
+  base_map <- htmlwidgets::onRender(
+    base_map,
+    "function(el, x) {
+      var map = this;
+
+      function loadCSS(url) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+
+      function loadScript(url, callback) {
+        var script = document.createElement('script');
+        script.src = url;
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      loadCSS('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css');
+      loadScript('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js', function() {
+        loadScript('https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js', function() {
+          L.maplibreGL({
+            style: 'https://www.mapabase.atdt.gob.mx/style.json'
+          }).addTo(map);
+          map.attributionControl.addAttribution(
+            '&copy; <a href=\"https://www.gob.mx/atdt\" target=\"_blank\">ATDT</a> | ' +
+            '<a href=\"https://www.inegi.org.mx/\" target=\"_blank\">INEGI</a> | ' +
+            '<a href=\"https://www.openstreetmap.org/\" target=\"_blank\">OSM</a>'
+          );
+        });
+      });
+    }"
+  )
+
   lf <- leaflet::addTopoJSON(
-    leaflet::addTiles(
-      leaflet::leaflet(
-        option = leaflet::leafletOptions(
-          zoomSnap = 0.25,
-          zoomDelta = 0.25,
-          zoomControl = TRUE,
-          minZoom = 5,    # Puedes ajustar si deseas permitir acercamientos específicos
-          maxZoom = 15
-        )
-      ),
-      urlTemplate = "https://maps.geoapify.com/v1/tile/positron/{z}/{x}/{y}.png?&apiKey=f39345000acd4188aae1f2f4eed3ff14",
-      attribution = "positron"
-    ),
+    base_map,
     topojson = mayorsGobmx,
     weight = 0,
     opacity = 0,

@@ -658,7 +658,7 @@ p {
 }
 
 .leaflet-control-attribution {
-    display: none !important
+    display: block !important
 }
 
 input[type="radio"] {

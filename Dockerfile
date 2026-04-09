@@ -1,5 +1,5 @@
 # Usar la imagen base de R con la versión 4.2
-FROM --platform=linux/amd64 rocker/r-ver:4.2
+FROM rocker/r-ver:4.2
 
 # Definir variables de entorno
 ENV TZ=Etc/UTC \
@@ -80,12 +80,6 @@ RUN wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor 
 # CORRECCIÓN: Establecer Google Chrome como navegador predeterminado
 ENV CHROMOTE_CHROME="/usr/bin/google-chrome"
 
-RUN cd /tmp && \
-    wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
-    rm -rf phantomjs-2.1.1-linux-x86_64.tar.bz2 phantomjs-2.1.1-linux-x86_64
-
 # Copiar librerías de R previamente instaladas
 COPY site-library /usr/local/lib/R/site-library
 
@@ -94,10 +88,13 @@ WORKDIR /build_zone
 COPY . /build_zone
 
 # Eliminar archivos de renv para evitar problemas con el entorno virtual
-RUN rm -rf /build_zone/renv /build_zone/renv.lock
+RUN rm -rf /build_zone/renv /build_zone/renv.lock /build_zone/.Rprofile
+
+# Reinstalar el paquete desde el código fuente actual
+RUN R CMD INSTALL --no-multiarch --with-keep.source /build_zone
 
 # Exponer el puerto de Shiny
 EXPOSE 3839
 
 # Comando final para ejecutar la aplicación
-CMD R -e "options('shiny.port'=3839, shiny.host='0.0.0.0'); shiny::runApp(system.file('gobmx-shapes-app', package = 'gobmx.shapes'))"
+CMD ["R", "-e", "options('shiny.port'=3839, shiny.host='0.0.0.0'); shiny::runApp(system.file('gobmx-shapes-app', package = 'gobmx.shapes'))"]
