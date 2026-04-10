@@ -38,7 +38,7 @@ plot_shapes <- function(shape_data, opts) {
       loadScript('maplibre-gl.js', function() {
         loadScript('leaflet-maplibre-gl.js', function() {
           L.maplibreGL({
-            style: 'https://www.mapabase.atdt.gob.mx/style.json'
+            style: 'https://www.mapabase.atdt.gob.mx/style_white_places.json'
           }).addTo(map);
           map.attributionControl.addAttribution(
             '&copy; <a href=\"https://www.gob.mx/atdt\" target=\"_blank\">ATDT</a> | ' +
