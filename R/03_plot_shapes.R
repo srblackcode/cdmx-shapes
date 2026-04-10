@@ -34,9 +34,9 @@ plot_shapes <- function(shape_data, opts) {
         document.head.appendChild(script);
       }
 
-      loadCSS('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css');
-      loadScript('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js', function() {
-        loadScript('https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js', function() {
+      loadCSS('maplibre-gl.css');
+      loadScript('maplibre-gl.js', function() {
+        loadScript('leaflet-maplibre-gl.js', function() {
           L.maplibreGL({
             style: 'https://www.mapabase.atdt.gob.mx/style.json'
           }).addTo(map);
@@ -77,7 +77,42 @@ plot_shapes <- function(shape_data, opts) {
       label = ~labels,
       color = opts$colors,
       radius = 3,
-      fillOpacity = 1
+      fillOpacity = 1,
+      clusterOptions = leaflet::markerClusterOptions(
+        iconCreateFunction = htmlwidgets::JS(sprintf(
+          "function(cluster) {
+            var childCount = cluster.getChildCount();
+            var color = '%s';
+
+            function lightenColor(hex, factor) {
+              var r = parseInt(hex.slice(1, 3), 16);
+              var g = parseInt(hex.slice(3, 5), 16);
+              var b = parseInt(hex.slice(5, 7), 16);
+              r = Math.min(255, Math.floor(r + (255 - r) * factor));
+              g = Math.min(255, Math.floor(g + (255 - g) * factor));
+              b = Math.min(255, Math.floor(b + (255 - b) * factor));
+              return 'rgb(' + r + ',' + g + ',' + b + ')';
+            }
+
+            var borderColor = lightenColor(color, 0.4);
+
+            return new L.DivIcon({
+              html: '<div style=\"' +
+                'background-color:' + color + ';' +
+                'border: 5px solid ' + borderColor + ';' +
+                'border-radius: 50%%;' +
+                'width: 40px; height: 40px;' +
+                'display: flex; align-items: center; justify-content: center;' +
+                'color: white; font-weight: bold;' +
+                'font-size: 12px;' +
+                '\">' + childCount + '</div>',
+              className: 'marker-cluster',
+              iconSize: new L.Point(40, 40)
+            });
+          }",
+          opts$colors[1]
+        ))
+      )
     )
   }
 

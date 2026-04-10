@@ -1,5 +1,7 @@
 unzip_shape <- function(url, export_dir) {
-  file_destiny <- paste0(tempdir(check = TRUE), "/shape_file.zip")
+  is_csv <- grepl("\\.csv$", url, ignore.case = TRUE)
+  ext <- if (is_csv) "csv" else "zip"
+  file_destiny <- paste0(tempdir(check = TRUE), "/shape_file.", ext)
 
   # Intentar descargar con download.file
   success <- tryCatch({
@@ -8,7 +10,7 @@ unzip_shape <- function(url, export_dir) {
   }, error = function(e) {
     message("Error con `download.file()`, intentando con `wget`...")
     system(paste0("wget -O ", file_destiny, " --timeout=3600 ", url))
-    file.exists(file_destiny)  # Verifica si el archivo se descargó
+    file.exists(file_destiny)
   })
 
   # Si la descarga falló, detener ejecución
@@ -16,12 +18,20 @@ unzip_shape <- function(url, export_dir) {
     stop("Error: No se pudo descargar el archivo o el archivo está vacío.")
   }
 
-  # Verificar que el archivo es un ZIP válido
-  if (!grepl("\\.zip$", file_destiny) || !file.exists(file_destiny)) {
-    stop("Error: Archivo descargado no es un ZIP válido.")
+  # Manejo de CSV
+  if (is_csv) {
+    dir.create(export_dir, showWarnings = FALSE, recursive = TRUE)
+    csv_name <- basename(url)
+    csv_dest <- file.path(export_dir, csv_name)
+    file.copy(file_destiny, csv_dest, overwrite = TRUE)
+    return(list(
+      shape_file = csv_dest,
+      shape_dsn  = "csv",
+      shape_layer = tools::file_path_sans_ext(csv_name)
+    ))
   }
 
-  # Intentar descomprimir el archivo
+  # Intentar descomprimir el archivo ZIP
   unzip_status <- tryCatch({
     unzip(zipfile = file_destiny, exdir = export_dir)
     TRUE
@@ -30,7 +40,6 @@ unzip_shape <- function(url, export_dir) {
     FALSE
   })
 
-  # Si la extracción falló, detener la ejecución
   if (!unzip_status) {
     stop("Error: No se pudo extraer el archivo ZIP.")
   }
@@ -53,10 +62,9 @@ unzip_shape <- function(url, export_dir) {
   ext <- substring(shape_info, regexpr("\\.([[:alnum:]]+)$", shape_info) + 1L)
   shape_layer <- unique(gsub(paste0(".", ext, collapse = "|"), "", shape_info)) |> setdiff("license")
 
-  # Retornar información del shape file
   list(
     shape_file = export_dir,
-    shape_dsn = shape_dsn,
+    shape_dsn  = shape_dsn,
     shape_layer = shape_layer
   )
 }

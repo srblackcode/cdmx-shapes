@@ -98,7 +98,7 @@ server <- function(input, output, session) {
 
   info_url <- reactive({
     linkInfo <- url_par()$inputs$ckanConf
-    if (is.null(linkInfo)) linkInfo <-  "62ec1cf7-937f-4d20-af1a-759451619c9a"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
+    if (is.null(linkInfo)) linkInfo <-  "4d6f570f-f2fc-45e5-af32-08f42a46265b"#"611136b5-5891-4764-a4cd-c12a5109770f"#"ce383321-92de-4a13-8234-7756b520ee4e"
     gobmx.shapes:::read_ckan_info(url = url_info, linkInfo = linkInfo)
   })
 
