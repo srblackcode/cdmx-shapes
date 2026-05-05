@@ -4,7 +4,7 @@
 .RData
 # .Renviron
 .Rhistory
-.Rprofile
+# .Rprofile
 inst/gobmx-shapes-app/rsconnect
 inst/gobmx-shapes-app/.Rbuildignore
 inst/gobmx-shapes-app/.DS_Store
